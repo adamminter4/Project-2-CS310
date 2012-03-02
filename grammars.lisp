@@ -91,7 +91,7 @@
 	 (MAEYear1 -> (engr102 Engineering_Cluster0))
 	 
 	 ;*******Medical Science Clusters (Chemistry and Biology)*******;
-	 (Medical_Science_Cluster0 -> (phys111 phys122 MedSciPreReq0) (phys101 phys102 MedSciPreReqs0))
+	 (Medical_Science_Cluster0 -> (phys111 phys122 MedSciPreReqs0) (phys101 phys102 MedSciPreReqs0))
 	 (MedSciPreReqs0 -> (univ199 engl101 ((chem115 chem116) (chem117 chem118)) GEC_1))
 
 	 (Medical_Science_Cluster1 -> (chem233 chem234 chem235 chem236 MedSciPreReqs1))
@@ -186,4 +186,4 @@
 	 (International_Studies -> ISYear3)
 	 (ISYear3 -> (span330 span331 span332 span431 span461 span464 ISYear2))
 	 (ISYear2 -> (econ201 econ202 span203 span204 span301 span302 geo215 geo243 GEC_2 ISYear1))
-	 (ISYear1 -> (flit113 flit114 flit115 flit116 Arts_Cluster0 span101 span102)))
+	 (ISYear1 -> (flit113 flit114 flit115 flit116 Arts_Cluster0 span101 span102))))
