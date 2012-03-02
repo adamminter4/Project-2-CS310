@@ -61,3 +61,22 @@ So how will I do this? Welp, it's just theory at the moment, but this is what I 
   4.) Write the 6 other deftests (lol)
   5.) Finish 2a. (MOAR LAWL. I need to stop procrastinating.)
   
+
+2b)
+One student pointed out that by default, the "symbol-name" function
+will set the case of all letters to the same, which prevents you from
+properly checking if the first letter of a symbol was lower-cased, as
+the instruction initially said.
+
+Therefore, I have changed the instruction so that you want your
+terminal-p function to check if the first letter of the symbol is "!".
+In order for this to work, however, you will need to edit your
+scifi.txt file so that all terminals start with "!". (just simply put
+an exclamation point--without quotes around it--in front of all
+terminal symbols manually, that is those that start with lower case
+letters in the text file).
+
+Let me know if you need any clarification on that.
+
+(By the by, if you figure out how to get it working without using
+exclamation points, go ahead and stick with that solution).
