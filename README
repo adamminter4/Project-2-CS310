@@ -1,6 +1,12 @@
 menzies.us/cs310/cs310_20.html#Project2
 http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node153.html
 
+"What mappend should do:
+
+(mappend #'cdr '((1 2 3) (4 5 6)))
+
+(2 3 5 6)"
+
 NOTES:
 I want to create my generate and generates function before I start trying to devise a way of writing my deftests.
 I guess it makes sense ^_^
