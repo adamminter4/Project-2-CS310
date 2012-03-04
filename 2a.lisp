@@ -1,20 +1,11 @@
-(deftest !generate2 ()
-  (test ;some list;
-   (!generate2-prim 'Schedule *grammar3*)))
-
 ;Creates a Hash table to store the lists I get from generatesSchedule ;
-;The GECs use the hash table to *hopefully* elimiate redundancy. The  ;
-;other keys in the hash table are for storing the different years that;
-;the schedule creates. It's really only used for formatting at the end;
-;in the generates2 function. If this takes more than 2 hours to fix,  ;
-;if my code doesn't work, I'm scrapping the year keys. I'm really not ;
-;sure if those will work.                                             ;
+;The GECs use the hash table to *hopefully* elimiate redundancy.      ;                                           
 (defparameter *GEC_Hash* (make-hash-table))
 
-;Don't think I actually need this function. I will test it with and   ;
-;and without when I get to that point.                                ;
+;We need to initialize the hash before we use it, to effectively make ;
+;it global.                                                           ;
 (defun initializeHash ()
-  (setf (gethash 'GECs *GEC_Hash*) 'GEC_List)
+  (setf (gethash 'GECs *GEC_Hash*) 'GEC_List))
 
 ;I wrote this as a seperate function for organization, but it also    ;
 ;kinda made sense to do. If my logic is correct, this won't break the ;
@@ -25,28 +16,53 @@
     (let ((gec (random-elt (rule-rhs phrase))))
       (if (listp (member gec lst))
 	  (cacheGEC phrase)
-	  ((push gec lst) 
-	   (setf (gethash 'GECs *GEC_Hash*) 'lst))))))
+	  (setf (gethash 'GECs *GEC_Hash*) '(push gec lst))))))
 
-(defun genSchedule (phrase)
+(defun genSch (phrase)
   (cond ((listp phrase)
-	  (mappend #'genSchedule phrase)))
-	((rewrite phrase)
 	 ;Here's where I attempt to check if the phrase is a GEC_# non-terminal, which;
 	 ;I know, leads to a non-terminal. So I pass it up to (storeGEC).             ;
-	 (if (search "GEC" phrase)
-	     (storeGEC (phrase))
-	 (genSchedule (random-elt (rewrites phrase)))))
-	(t (list phrase (gethash 'GECs *GEC_Hash))))
+	 (if (numberp (search "GEC" (rule-lhs phrase)))
+	     (cacheGEC (phrase))
+	     (mappend #'genSch phrase)))
+	((rewrite phrase)
+	 (genSch (random-elt (rewrites phrase))))
+	(t (list phrase (gethash 'GECs *GEC_Hash*)))))
 
-(defun !generate2-prim (type gram 10)
-  (setf *grammar* gram)
+(defun generatesSch (n phrase &optional (g *grammar*))
+  (initializeHash)
+  (dotimes (i n)
+    (setf *grammar* (eval g))
+    (print (genSch phrase))))
+
+;***********Tests****************;
+
+(defun !generate2-prim (type g &optional (n 2))
+  (setf *grammar* g)
   (reset-seed)
   (mapcar #'genSchedule
 	  '(Schedule Schedule Schedule Schedule Schedule
 	    Schedule Schedule Schedule Schedule Schedule)))
 
-(defun generates2 (n phrase &optional (g *grammar*))
-  (dotimes (i n)
-    (setf *grammar* (eval g))
-    (print (genSchedule phrase))))
+(deftest !genSchedule1 ()
+   (!generate2-prim 'Schedule *grammar3*))
+
+(deftest !raindi ()
+  (test 7 (1a9 a)))
+
+(deftest !reset-seed ()
+  (test))
+
+(deftest !shuffle ()
+  (test))
+
+(deftest !random-elt ()
+  (reset-seed)
+  (test 'adam (random-elt '(bro dude adam brah))))
+
+(deftest !one-of ()
+  (reset-seed)
+  (test (listp (one-of '(bro dude adam brah)))))
+
+(deftest !mappend ()
+  (test '(2 3 5 6) (mappend #'cdr '((1 2 3) '(4 5 6)))))
