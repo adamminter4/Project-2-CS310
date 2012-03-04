@@ -218,13 +218,16 @@
     (!Beings -> bugs reptiles blobs superbeings)
     (!Sizes -> tiny giant enormous)
     (!Whichetc -> who WantSomething)
+    (!WhichEtc -> )
     
     (!WantSomething -> !WantWomen (areFriendly !DenoumentOrHappyEnding) (!Understand !ButEtc))
-    (!WantWomen -> (wantOurWomen andTakeAfewAndLeave))
+    (!WantWomen -> (wantOurWomen !AndTakeAfewAndLeave))
     (!ButEtc -> (!AndAre radioactive !TryToKill))
 
     (!Understand -> (areFriendly butMisunderstood) misunderstandUs understandUsAllTooWell !Hungry)
     (!Hungry -> lookUponUsAsASourceOfNourishment)
+
+    (!Dine -> (!Hungry and eat us Denoument?))
     
     (!AndAre -> andAre andAreNot)
     
@@ -237,6 +240,9 @@
 	    soTheyEatUs (soScientistsInventAWeapon !Which))
     (!Which -> whichTurnsThemIntoDisgustingLumps whichKillsThem (whichFails !SoEtc))
 
+    (!Denoument? ->   !Denoument)
+    (!Denoument? -> )
+
     (!DenoumentOrHappyEnding -> !Denoument !HappyEnding)
     (!Denoument -> (!Result !Ending))
     (!Result -> aCuteLittleKidConvincesThemPeopleAreOk aPriestTalksToThemOfGod theyFallInLoveWithThisBeautifulGirl)  
@@ -244,6 +250,3 @@
     (!Ending -> !Tragic !Happy)
     (!Tragic -> andTheyDie andTheyLeave andTheyTurnIntoDisgustingLumps)
     (!Happy -> andTheyGetMarriedAndLiveHappilyForeverAfter))
-    
-    
-    
