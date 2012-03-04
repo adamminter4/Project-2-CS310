@@ -1,6 +1,7 @@
 ;Creates a Hash table to store the lists I get from generatesSchedule ;
 ;The GECs use the hash table to *hopefully* elimiate redundancy.      ;                                           
 (defparameter *GEC_Hash* (make-hash-table))
+(defparameter *grammar* nil)
 
 ;We need to initialize the hash before we use it, to effectively make ;
 ;it global.                                                           ;
