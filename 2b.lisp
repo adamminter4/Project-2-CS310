@@ -4,11 +4,11 @@
 
 (defparameter *testgrammarFAIL*
   '((!Test -> (!Awesome !Dolphin !Basketball))
-    (!Awesome -> ((adam minter is awesome) !PaintingStuff))
+    (!Awesome -> ((adamMinterIsAwesome) !PaintingStuff))
     (!StupidTerm ->   )
-    (!Lard ->  (i liek turtles) (i heard u liek mudkips))
-    (!Batman -> (better have his back broken by Bane in Dark Knight Rises))
-    (!Dolphin -> (dolphins rule))
+    (!Lard ->  (iLiekTurtles) (iHeardULiekMudkips))
+    (!Batman -> (betterHaveHisBackBrokenByBaneInDarkKnightRises))
+    (!Dolphin -> (dolphinsRule))
     (!RickSantorum -> )))
 
 (defun get-terms (gram)
@@ -16,21 +16,19 @@
   (let ((terms nil) (nonterms nil) (rhs nil))
       (dolist (i *grammar*)
 	(if (terminalp (car i))
-	    (setf nonterms (list (car i) nonterms))
-	    (let ((temp (flatten (rest (rest i)))))
-	      (dolist (j (flatten temp))
-		(if (terminalp j)
-		    (setf rhs (list j rhs))
-		    (setf terms (list j terms)))))))
+	    (push (car i) nonterms)
+	    nil)
+	(let ((temp (flatten (rest (rest i)))))
+	  (dolist (j temp)
+	    (if (terminalp j)
+		(push j rhs)
+		(push j terms)))))
       (setf (gethash 'NonTerms *terms_Hash*) (remove nil  
 						     (reverse 
 						      (flatten 
 						       (remove-duplicates nonterms)))))
-      (print (gethash 'NonTerms *terms_Hash*))
       (setf (gethash 'RHS_NonTerms *terms_Hash*) (remove-duplicates rhs))
-      (print (gethash 'RHS_NonTerms *terms_Hash*))
-      (setf (gethash 'Terminals *terms_Hash*) (remove-duplicates terms))
-      (print (gethash 'Terminals *terms_Hash*))))
+      (setf (gethash 'Terminals *terms_Hash*) (remove nil (remove-duplicates terms)))))
 
 
 
@@ -54,24 +52,24 @@
     (dolist (i gram)
       (if (and (terminalp (car i))
 	       (null (cdr (cdr i))))
-	  (setf lst (list (car i) lst))
+	  (push (car i) lst)
 	  t)
       )
-    (remove nil (flatten (reverse lst)))))
+    (remove nil (reverse (flatten lst)))))
 
 
 
 ;3.) Deftests for Unused-Rewrite Function;
 (deftest !unused-rewrite () 
-  (test '(!StupidTerm !RickSantorum) (unused-rewrites *testgrammarFAIL*)))
+  (test '(!StupidTerm !Lard !Batman !RickSantorum) (unused-rewrites *testgrammarFAIL*)))
 
 (defun unused-rewrites (gram)
   (setf *grammar* gram)
   (get-terms *grammar*)
   (let ((lst nil) (lhs (gethash 'NonTerms *terms_Hash*)) (rhs (gethash 'RHS_NonTerms *terms_Hash*)))
-    (print lst)
-    (dolist (i rhs)
-      (if (listp (member i lhs))
-	  t
-	  (setf lst (list i lst))))
-    lst))
+    (pop lhs)
+    (dolist (i lhs)
+      (if (null (member i rhs))
+	  (setf lst (list i lst))
+	  t))
+    (remove nil (reverse (flatten lst)))))
