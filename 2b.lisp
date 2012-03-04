@@ -9,7 +9,7 @@
     (!Lard ->  (i liek turtles) (i heard u liek mudkips))
     (!Batman -> (better have his back broken by Bane in Dark Knight Rises))
     (!Dolphin -> (dolphins rule))
-    (!RickSantorum -> ))))
+    (!RickSantorum -> )))
 
 (defun get-terms (gram)
   (setf *grammar* gram)
@@ -36,28 +36,22 @@
   (and (symbolp x)
        (eql (char (symbol-name x) 0) #\!)))
 
-;(defun terminalp (x)
- ; (print x)
-  ;(let ((lst (list (gensym x))))
-   ; (and (symbolp (car lst))
-;	 (eql (char (symbol-name (car lst)) 0) #\!))))
-
 
 
 ;2.) Deftests for Undefined-nonterminal function;
 (deftest !undefined-nonterminal () 
-  (test '(!PaintingStuff !Basketball) (undefined-nonterminal *testgrammarFAIL*)))
+  (test '(!StupidTerm !RickSantorum) (undefined-nonterminal *testgrammarFAIL*)))
 
 (defun undefined-nonterminal (gram)
   (setf *grammar* gram)
-  (let ((lst nil) (temp nil))
+  (let (lst)
     (dolist (i gram)
-      (print (listp (cdr (cdr i))))
       (if (and (terminalp (car i))
-	       (listp (cdr (cdr i))))
-	  t
-	  (setf lst (list i lst))))
-    lst))
+	       (null (cdr (cdr i))))
+	  (setf lst (list (car i) lst))
+	  t)
+      )
+    (print (remove nil (flatten (reverse lst))))))
 
 
 
