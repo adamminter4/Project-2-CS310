@@ -44,21 +44,23 @@
 	  '(Schedule Schedule Schedule Schedule Schedule
 	    Schedule Schedule Schedule Schedule Schedule)))
 
+
 (deftest !genSchedule1 ()
    (!generate2-prim 'Schedule *grammar3*))
 
 (deftest !raindi ()
-  (test 7 (1a9 a)))
+  (reset-seed)
+  (test (9 0.2163) (randi 10)))
 
 (deftest !reset-seed ()
-  (test))
+  (test 10013 (reset-seed)))
 
 (deftest !shuffle ()
-  (test))
+  (test '(brah bro dude adam) (shuffle '(bro dude adam brah))))
 
 (deftest !random-elt ()
   (reset-seed)
-  (test 'adam (random-elt '(bro dude adam brah))))
+  (test 'brah (random-elt '(bro dude adam brah))))
 
 (deftest !one-of ()
   (reset-seed)
