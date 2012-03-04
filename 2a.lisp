@@ -3,6 +3,9 @@
 (defparameter *GEC_Hash* (make-hash-table))
 (defparameter *grammar* nil)
 
+(defun rewrites2 (category)
+  (rule-rhs (assoc category *grammar*)))
+
 ;We need to initialize the hash before we use it, to effectively make ;
 ;it global.                                                           ;
 (defun initializeHash ()
@@ -26,8 +29,8 @@
 	 (if (numberp (search "GEC" (rule-lhs phrase)))
 	     (cacheGEC (phrase))
 	     (mappend #'genSch phrase)))
-	((rewrite phrase)
-	 (genSch (random-elt (rewrites phrase))))
+	((rewrites2 phrase)
+	 (genSch (random-elt (rewrites2 phrase))))
 	(t (list phrase (gethash 'GECs *GEC_Hash*)))))
 
 (defun generatesSch (n phrase &optional (g *grammar*))
@@ -35,6 +38,7 @@
   (dotimes (i n)
     (setf *grammar* (eval g))
     (print (genSch phrase))))
+
 
 ;***********Tests****************;
 
