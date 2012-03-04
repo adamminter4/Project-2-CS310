@@ -1,4 +1,7 @@
+(defparameter *terms_Hash* (make-hash-table))
+
 (defparameter *grammar* nil)
+
 (defparameter *testgrammarFAIL*
   '((!Test -> (!Awesome !Dolphin !Basketball)
     (!Awesome -> ((adam minter is awesome) !PaintingStuff))
@@ -15,15 +18,26 @@
      (!Awesome -> sweet dude (!Awesome !Awesome))
      (!Batman -> (seriously better have his back broken in Dark Knight Rises)))))
 
-(defun rewrites2b (phrase)
-  (rule-rhs (assoc phrase *grammar*)))
+(defun get-terms (gram)
+  (setf *grammar* gram)
+  (let ((terms nil) (nonterms nil) (rhs nil)) 
+      (dolist (i *grammar*)
+	(if (terminalp (car i))
+	    (setf nonterms (list (car i) nonterms))
+	    (let ((temp (flatten (rest (rest i)))))
+	      (dolist (j (flatten temp))
+		(if (terminalp j)
+		    (setf rhs (list j rhs))
+		    (setf terms (list j terms)))))))
+      (setf (gethash 'NonTerms *terms_Hash*) '(remove-duplicates nonterms))
+      (setf (gethash 'RHS_NonTerms *terms_Hash*) '(remove-duplicates rhs))
+      (setf (gethash 'Terminals *terms_Hash*) '(remove-duplicates terms))))
+
+
 
 ;1.) DefTests for Terminalp function;
 (deftest !terminalp0 ()
   (test t (terminalp "!fTw")))
-
-(deftest !terminalp1 ()
-  (test nil (terminalp "cat")))
 
 (defun terminalp (nonterm)
   (let ((i (char nonterm 0)))
@@ -31,44 +45,33 @@
 	 (eql (char (symbol-name i) 0) #\!))))
 
 
+
 ;2.) Deftests for Undefined-nonterminal function;
-(deftest !undefined-nonterminal0 (&aux (root (!Test))) 
-  (test '(!PaintingStuff !Basketball) (!undefined-nonterm-list root *testgrammarFAIL*)))
+(deftest !undefined-nonterminal0 () 
+  (test '(!PaintingStuff !Basketball) (undefined-nonterminal *testgrammarFAIL*)))
 
-(deftest !undefined-nonterminal1 (&aux (root (!Test)))
-  (test nil (!undefined-nonterm-list root *testgrammarWIN*)))
-
-(defun generatesUndefTerm (10 phrase &optional (g *grammar*))
-  (dotimes (i n)
-    (setf *grammar* (eval g))
-    (undefined-nonterminal (phrase))))
-
-(defun undefined-nonterminal (phrase)
-  (let ((lst nil))
-    (cond ((listp phrase)
-	   (mappend #'undefined-nonterminal phrase))
-	  (((terminalp (car phrase))
-	    (if (eql (rule-rhs phrase) nil)  
-		(list (car phrase) lst)
-		(undefined-nonterminal (rewrites2b phrase)))))
-	  )
+(defun undefined-nonterminal (gram)
+  (setf *grammar* gram)
+  (let ((lst nil) (temp nil))
+    (dolist (i gram)
+      (if (and (terminalp (car i))
+	       (listp (cdr (cdr i))))
+	  t
+	  (setf lst (list i lst))))
     lst))
 
-(defun !undefined-nonterm-list (root g &optional (n 5))
-  (setf *grammar* g)
-  (reset-seed)
-  (remove-duplicates (list (mapcar #'undefined-nonterminal '(!Test !Test !Test)))))
 
 
 ;3.) Deftests for Unused-Rewrite Function;
 (deftest !unused-rewrite () 
-  (test '(Lard Batman) (unused-rewrite *testgrammarFAIL)))
+  (test '(!StupidTerm !RickSantorum) (unused-rewrite *testgrammarFAIL)))
 
-(deftest !unused-rewrite ()
-  (test nil (unused-rewrite *testgrammarWIN*)))
-  
-(defun unused-rewrite (g)
-  (setf *grammar* g)
-  
-
-   
+(defun unused-rewrites (gram)
+  (setf *grammar* gram)
+  (get-terms *grammar*)
+  (let ((lst nil) (lhs (gethash 'NonTerms *terms_Hash*)) (rhs (gethash 'RHS_NonTerms *terms_Hash*)))
+    (dolist (i rhs)
+      (if (listp (member i lhs))
+	  t
+	  (setf lst (list i lst))))
+    lst))
