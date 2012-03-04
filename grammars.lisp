@@ -52,15 +52,10 @@
 	 ;but when I get 2c finished, I'll try and fix 2a to  ;
 	 ;account for this. I'm thinking something along the  ;
 	 ;lines of what an attributed grammar does. ^_^       ;
-	 (GEC_1 -> GEC_Cluster0 GEC_Cluster1)
-	 (GEC_2 -> GEC_1 GEC_Cluster2 GEC_Cluster3)
-	 (GEC_Cluster0 -> soca105 phil140 dance101 geo110 com101)
-	 (GEC_Cluster1 -> film102 pet101 thet101 engl132 psyc101)
-	 (GEC_Cluster2 -> econ201 econ202 comm202 soca221)
-	 (GEC_Cluster3 -> cs101 hist201 relg219 phil260)
+	 (GEC_1 ->  soca105 phil140 dance101 geo110 com101 film102 pet101 thet101 engl132 psyc101)
+	 (GEC_2 -> GEC_1 econ201 econ202 comm202 soca221 cs101 hist201 relg219 phil260) 
  
-	
-	
+
 	 ;*************Science based Course Plans**************;
 	 ;I broke up each type of major into specific clusters ;
 	 ;to make things easier to read. These clusters  are   ;
