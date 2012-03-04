@@ -182,3 +182,68 @@
 	 (ISYear3 -> (span330 span331 span332 span431 span461 span464 ISYear2))
 	 (ISYear2 -> (econ201 econ202 span203 span204 span301 span302 geo215 geo243 GEC_2 ISYear1))
 	 (ISYear1 -> (flit113 flit114 flit115 flit116 Arts_Cluster0 span101 span102))))
+
+
+(defparameter *grammar4*
+  '((Start -> ("The Earth" !IsStressed))
+    (!IsStressed -> !Catestrophes)
+    (!IsStressed -> !Collision)
+    (!IsStressed -> !Science)
+    (!IsStressed -> !Attack)
+    
+    (!Catestrophes -> !Catestrophe !PossibleMegaDeath)
+    (!Collision -> (isStruckByAGiant !Floater !AndThen))
+    (!Attack -> (isAttackedBy !Sizes !Extraterestrial !Beings !Whichetc)
+    (!Science -> (scientists !DoScience !Sizes !Beings !Whichetc)
+    
+    ;Catestrophes;
+    (!Catestrophe -> (burnsUp freezes fallsIntoSun)
+    
+    ;Collision;
+    (!Floater -> comet asteroid cloud)
+    (!AndThen -> butIsSaved andIsDestroyed (andNotDestroyed !PossibleMegaDeath))
+    (!PossibleMegaDeath -> everybodyDie (!SomeSaved !GoOn))
+    (!SomeSaved -> somePeople everybody almostEverybody)
+    (!GoOn -> dies !Rescued !Saved)
+    
+    ;Possible Collision Aftermath;
+    (!Rescued -> (isRescued !Sizes !Extraterestrial !Beings)
+    (!Saved -> butIsSavedBy !SomeOne and the !Science)
+    
+    (!DoScience -> invent discover)
+    (!SomeOne -> earth !Extraterestrial)
+    
+    ;Attacks;
+    (!Extraterestrial -> martian lunar extraGalactic)
+    (!Beings -> bugs reptiles blobs superbeings)
+    (!Sizes -> tiny giant enormous)
+    (!Whichetc -> who WantSomething)
+    
+    (!WantSomething -> !WantWomen (areFriendly !DenoumentOrHappyEnding) (!Understand !ButEtc))
+    (!WantWomen -> (wantOurWomen andTakeAfewAndLeave))
+    (!ButEtc -> (!AndAre radioactive !TryToKill))
+
+    (!Understand -> (areFriendly butMisunderstood) misunderstandUs understandUsAllTooWell !Hungry)
+    (!Hungry -> lookUponUsAsASourceOfNourishment)
+    
+    (!AndAre -> andAre andAreNot)
+    
+    (!TryToKill -> (can be killed by !Killers) (can not be killed by !Killers !SoEtc))
+    
+    (!Killers -> !Killer (!Killer and !Killer))
+    (!Killer -> aCrowdofPeasants theArmy theNavy theAirForce theMarines theCoastGuard theAtomBomb)
+    
+    (!SoEtc -> butTheyDieFromCatchingACold soTheyKillus soTheyPutUsUnderABenignDictatorShip
+	    soTheyEatUs (soScientistsInventAWeapon !Which))
+    (!Which -> whichTurnsThemIntoDisgustingLumps whichKillsThem (whichFails !SoEtc))
+
+    (!DenoumentOrHappyEnding -> !Denoument !HappyEnding)
+    (!Denoument -> (!Result !Ending))
+    (!Result -> aCuteLittleKidConvincesThemPeopleAreOk aPriestTalksToThemOfGod theyFallInLoveWithThisBeautifulGirl)  
+    
+    (!Ending -> !Tragic !Happy)
+    (!Tragic -> andTheyDie andTheyLeave andTheyTurnIntoDisgustingLumps)
+    (!Happy -> andTheyGetMarriedAndLiveHappilyForeverAfter))
+    
+    
+    
