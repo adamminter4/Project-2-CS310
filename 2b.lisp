@@ -13,7 +13,7 @@
 
 (defun get-terms (gram)
   (setf *grammar* gram)
-  (let ((terms nil) (nonterms nil) (rhs nil)) 
+  (let ((terms nil) (nonterms nil) (rhs nil))
       (dolist (i *grammar*)
 	(if (terminalp (car i))
 	    (setf nonterms (list (car i) nonterms))
@@ -22,15 +22,21 @@
 		(if (terminalp j)
 		    (setf rhs (list j rhs))
 		    (setf terms (list j terms)))))))
-      (setf (gethash 'NonTerms *terms_Hash*) '(remove-duplicates nonterms))
-      (setf (gethash 'RHS_NonTerms *terms_Hash*) '(remove-duplicates rhs))
-      (setf (gethash 'Terminals *terms_Hash*) '(remove-duplicates terms))))
+      (setf (gethash 'NonTerms *terms_Hash*) (remove nil  
+						     (reverse 
+						      (flatten 
+						       (remove-duplicates nonterms)))))
+      (print (gethash 'NonTerms *terms_Hash*))
+      (setf (gethash 'RHS_NonTerms *terms_Hash*) (remove-duplicates rhs))
+      (print (gethash 'RHS_NonTerms *terms_Hash*))
+      (setf (gethash 'Terminals *terms_Hash*) (remove-duplicates terms))
+      (print (gethash 'Terminals *terms_Hash*))))
 
 
 
 ;1.) DefTests for Terminalp function;
 (deftest !terminalp ()
-  (test t (terminalp "!TEST")))
+  (test t (terminalp '!TEST)))
 
 (defun terminalp (x)
   (and (symbolp x)
@@ -51,7 +57,7 @@
 	  (setf lst (list (car i) lst))
 	  t)
       )
-    (print (remove nil (flatten (reverse lst))))))
+    (remove nil (flatten (reverse lst)))))
 
 
 
@@ -63,6 +69,7 @@
   (setf *grammar* gram)
   (get-terms *grammar*)
   (let ((lst nil) (lhs (gethash 'NonTerms *terms_Hash*)) (rhs (gethash 'RHS_NonTerms *terms_Hash*)))
+    (print lst)
     (dolist (i rhs)
       (if (listp (member i lhs))
 	  t
