@@ -3,20 +3,13 @@
 (defparameter *grammar* nil)
 
 (defparameter *testgrammarFAIL*
-  '((!Test -> (!Awesome !Dolphin !Basketball)
+  '((!Test -> (!Awesome !Dolphin !Basketball))
     (!Awesome -> ((adam minter is awesome) !PaintingStuff))
     (!StupidTerm ->   )
     (!Lard ->  (i liek turtles) (i heard u liek mudkips))
     (!Batman -> (better have his back broken by Bane in Dark Knight Rises))
     (!Dolphin -> (dolphins rule))
     (!RickSantorum -> ))))
-
-(defparameter *testgrammarWIN*
-  '((!Test -> (!Awesome !Dolphin !Batman)
-     (!Awesome -> (adam minter is awesome) !Bro)
-     (!Bro -> (andrew butcher told me that tim and will are bros))
-     (!Awesome -> sweet dude (!Awesome !Awesome))
-     (!Batman -> (seriously better have his back broken in Dark Knight Rises)))))
 
 (defun get-terms (gram)
   (setf *grammar* gram)
@@ -36,24 +29,30 @@
 
 
 ;1.) DefTests for Terminalp function;
-(deftest !terminalp0 ()
-  (test t (terminalp "!fTw")))
+(deftest !terminalp ()
+  (test t (terminalp "!TEST")))
 
-(defun terminalp (nonterm)
-  (let ((i (char nonterm 0)))
-    (and (symbolp i)
-	 (eql (char (symbol-name i) 0) #\!))))
+(defun terminalp (x)
+  (and (symbolp x)
+       (eql (char (symbol-name x) 0) #\!)))
+
+;(defun terminalp (x)
+ ; (print x)
+  ;(let ((lst (list (gensym x))))
+   ; (and (symbolp (car lst))
+;	 (eql (char (symbol-name (car lst)) 0) #\!))))
 
 
 
 ;2.) Deftests for Undefined-nonterminal function;
-(deftest !undefined-nonterminal0 () 
+(deftest !undefined-nonterminal () 
   (test '(!PaintingStuff !Basketball) (undefined-nonterminal *testgrammarFAIL*)))
 
 (defun undefined-nonterminal (gram)
   (setf *grammar* gram)
   (let ((lst nil) (temp nil))
     (dolist (i gram)
+      (print (listp (cdr (cdr i))))
       (if (and (terminalp (car i))
 	       (listp (cdr (cdr i))))
 	  t
@@ -64,7 +63,7 @@
 
 ;3.) Deftests for Unused-Rewrite Function;
 (deftest !unused-rewrite () 
-  (test '(!StupidTerm !RickSantorum) (unused-rewrite *testgrammarFAIL)))
+  (test '(!StupidTerm !RickSantorum) (unused-rewrites *testgrammarFAIL*)))
 
 (defun unused-rewrites (gram)
   (setf *grammar* gram)
