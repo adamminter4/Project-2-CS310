@@ -49,13 +49,12 @@
 
 ;2.) Deftests for Undefined-nonterminal function;
 (deftest !undefined-nonterminal () 
-  (test '(!HappyEnding !AndTakeAFewAndLeave !IsStressed) (undefined-nonterminal *grammar4*)))
+  (test '(!HappyEnding !AndTakeAFewAndLeave) (undefined-nonterminal *grammar4*)))
 
 (defun undefined-nonterminal (gram)
   (setf *grammar* gram)
   (get-terms *grammar*)
   (let ((lst nil) (lhs (gethash 'NonTerms *terms_Hash*)) (rhs (gethash 'RHS_NonTerms *terms_Hash*)))
-    (pop lhs)
     (dolist (i rhs)
       (if (null (member i lhs))
 	  (setf lst (list i lst))
