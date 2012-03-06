@@ -9,7 +9,7 @@
 ;We need to initialize the hash before we use it, to effectively make ;
 ;it global.                                                           ;
 (defun initializeHash ()
-  (setf (gethash 'GECs *GEC_Hash*) 'GEC_List))
+  (setf (gethash 'GECs *GEC_Hash*) 'GEC_Cache))
 
 ;I wrote this as a seperate function for organization, but it also    ;
 ;kinda made sense to do. If my logic is correct, this won't break the ;
@@ -20,38 +20,32 @@
     (let ((gec (random-elt (rule-rhs phrase))))
       (if (listp (member gec lst))
 	  (cacheGEC phrase)
-	  (setf (gethash 'GECs *GEC_Hash*) '(push gec lst))))))
+	  (setf (gethash 'GECs *GEC_Hash*) (push gec lst))))))
 
-(defun genSch (phrase)
+(defun generate2 (phrase)
   (cond ((listp phrase)
 	 ;Here's where I attempt to check if the phrase is a GEC_# non-terminal, which;
 	 ;I know, leads to a non-terminal. So I pass it up to (storeGEC).             ;
 	 (if (numberp (search "GEC" (rule-lhs phrase)))
-	     (cacheGEC (phrase))
-	     (mappend #'genSch phrase)))
+	     (cacheGEC phrase)
+	     (mappend #'generate2 phrase)))
 	((rewrites2 phrase)
-	 (genSch (random-elt (rewrites2 phrase))))
-	(t (list phrase (gethash 'GECs *GEC_Hash*)))))
+	 (generate2 (random-elt (rewrites2 phrase))))
+	(t (list phrase))))
 
-(defun generatesSch (n phrase &optional (g *grammar*))
-  (initializeHash)
+(defun generates2 (n phrase &optional (g *grammar*))
   (dotimes (i n)
-    (setf *grammar* (eval g))
-    (print (genSch phrase))))
+    (initializeHash)
+    (setf *grammar* g)
+    (print (list (generate2 phrase) (gethash 'GECs *GEC_Hash*)))))
 
 
 ;***********Tests****************;
 
-(defun !generate2-prim (type g &optional (n 2))
-  (setf *grammar* g)
+(deftest !generate3 ()
   (reset-seed)
-  (mapcar #'genSchedule
-	  '(Schedule Schedule Schedule Schedule Schedule
-	    Schedule Schedule Schedule Schedule Schedule)))
-
-
-;(deftest !genSchedule1 ()
- ;  (!generate2-prim 'Schedule *grammar3*))
+  (initializeHash)
+  (test nil (generates2 10 'Schedule *grammar3*)))
 
 (deftest !raindi ()
   (reset-seed)

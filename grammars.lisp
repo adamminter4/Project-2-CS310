@@ -191,13 +191,13 @@
     (!IsStressed -> !Science)
     (!IsStressed -> !Attack)
     
-    (!Catestrophes -> !Catestrophe !PossibleMegaDeath)
+    (!Catestrophes -> (!Catestrophe !PossibleMegaDeath))
     (!Collision -> (isStruckByAGiant !Floater !AndThen))
     (!Attack -> (isAttackedBy !Sizes !Extraterestrial !Beings !Whichetc))
     (!Science -> (scientists !DoScience !Sizes !Beings !Whichetc))
     
     ;Catestrophes;
-    (!Catestrophe -> (burnsUp freezes fallsIntoSun))
+    (!Catestrophe -> burnsUp freezes fallsIntoSun)
     
     ;Collision;
     (!Floater -> comet asteroid cloud)
@@ -208,7 +208,7 @@
     
     ;Possible Collision Aftermath;
     (!Rescued -> (isRescued !Sizes !Extraterestrial !Beings))
-    (!Saved -> butIsSavedBy !SomeOne and the !Science)
+    (!Saved -> butIsSavedBy !SomeOne !Science)
     
     (!DoScience -> invent discover)
     (!SomeOne -> earth !Extraterestrial)
