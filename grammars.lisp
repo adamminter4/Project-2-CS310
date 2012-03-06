@@ -52,7 +52,7 @@
 	 ;but when I get 2c finished, I'll try and fix 2a to  ;
 	 ;account for this. I'm thinking something along the  ;
 	 ;lines of what an attributed grammar does. ^_^       ;
-	 (GEC_1 ->  soca105 phil140 dance101 geo110 com101 film102 pet101 thet101 engl132 psyc101)
+	 (GEC_1 -> soca105 phil140 dance101 geo110 com101 film102 pet101 thet101 engl132 psyc101)
 	 (GEC_2 -> GEC_1 econ201 econ202 comm202 soca221 cs101 hist201 relg219 phil260) 
  
 
@@ -72,7 +72,7 @@
 	 (EC1PreReqs1 -> (math251 engl102 phys112))
      
 	 ;Computer Science Course Plan;
-	 (Computer_Science -> CSYear3) 
+	 (Computer_Science -> (ComputerScienceMajor CSYear3)) 
 	 (CSYear3 -> (cs310 cs350 cpe310 cpe311 CS400xx CS400xx GEC_SubGroup CSYear2))
 	 (CSYear2 -> (cs210 cs220 cs221 cs230 cpe271 cpe272 Engineering_Cluster1 CSYear1))
 	 (CSYear1 -> (cs110 cs111 Engineering_Cluster0))
@@ -80,7 +80,7 @@
 	 (GEC_SubGroup -> (GEC_2 GEC_2 GEC_2 GEC_2))
 
 	 ;Mechanical & Aerospace Engineering Course Plan;
-	 (Mechanical_and_Aerospace_Engineering -> MAEYear3)
+	 (Mechanical_and_Aerospace_Engineering -> (MechanicalandAreospaceEngineeringMajor MAEYear3))
 	 (MAEYear3 -> (mae316 mae320 mae335 mae343 ee221 ee222 mae336 mae345 mae365 GEC_2 MAEYear2))
 	 (MAEYear2 -> (mae215 mae241 mae242 mae243 mae244 Engineering_Cluster1 MAEYear1))
 	 (MAEYear1 -> (engr102 Engineering_Cluster0))
@@ -93,13 +93,13 @@
 	 (MedSciPreReqs1 -> (engl102 (math155 (math153 math154)) GEC_1))
 
 	 ;Chemistry Course Plan;
-	 (Chemistry -> ChemYear3)
+	 (Chemistry -> (ChemistryMajor ChemYear3))
 	 (ChemYear3 -> (math251 chem310 chem313 chem346 chem347 chem348 chem349 GEC_2 ChemYear2))
 	 (ChemYear2 -> (math156 Medical_Science_Cluster1 GEC_2 GEC_2 ChemYear1))
 	 (ChemYear1 -> (Medical_Science_Cluster0 GEC_1 GEC_1))
 
 	 ;Biology Course Plan;
-	 (Biology -> (BIOYear1 BIOYear2 BIOYear3))
+	 (Biology -> (BiologyMajor BIOYear3))
 	 (BIOYear3 -> (bio321 BioFocuses))
 	 (BIOYear2 -> (stat211 bio219 bio221 Medical_Science_Cluster1 BIOYear1))
 	 (BIOYear1 -> (bio115 bio117 Medical_Science_Cluster0))
@@ -139,22 +139,22 @@
 
 	 ;Basic required courses for all Arts students.  ;
 	 ;Trying to cut down on redundancy ^_^           ;
-	 (Arts_Cluster0 -> (univ199 engl101 engl101 GEC_1 GEC_1))
+	 (Arts_Cluster0 -> (univ199 engl101 engl102 GEC_1 GEC_1))
 	  
 	 ;         English Course Plan          ;
-	 (English -> ENGLYear3)
+	 (English -> (EnglishMajor ENGLYear3))
 	 (ENGLYear3 -> (engl221 engl226 engl263 engl301 engl309 engl319 engl337 GEC_2 ENGLYear2))
 	 (ENGLYear2 -> (engl241 engl242 engl261 GEC_2 GEC_2 GEC_2 GEC_2 ENGLYear1))
 	 (ENGLYear1 -> (engl200 Arts_Cluster0 Language_GEC))
 	 
 	 ;         Philosphy Course Plan        ;
-	 (Philosphy -> PHILYear3)
+	 (Philosophy -> (PhilosophyMajor PHILYear3))
 	 (PHILYear3 -> (phil301 phil302 phil321 phil346 phil494 phil496 GEC_2 PHILYear2))
 	 (PHILYear2 -> (phil244 phil248 phil260 GEC_2 GEC_2 PHILYear1))
 	 (PHILYear1 -> (Arts_Cluster0 Language_GEC GEC_1 GEC_2 GEC_2))
 
 	 ;         History Course Plan          ;
-	 (History -> HISTYear3)
+	 (History -> (HistoryMajor HISTYear3))
 	 (HISTYear3 -> (hist330 hist331 hist332 hist334 hist358 hist359 HISTYear2))
 	 (HISTYear2 -> (hist271 hist272 hist220 hist210 hist221 GEC_2 GEC_2 HISTYear1))
 	 (HISTYear1 -> (hist101 hist102 hist104 hist105 Arts_Cluster0 Language_GEC GEC_2 GEC_2))
@@ -178,7 +178,7 @@
 	 ;grammer randomly chooses Japanese -_- ;
 	 ;                                      ;
 	 ;That would totally be funny though.   ;
-	 (International_Studies -> ISYear3)
+	 (International_Studies -> (InternationalStudiesMajor ISYear3))
 	 (ISYear3 -> (span330 span331 span332 span431 span461 span464 ISYear2))
 	 (ISYear2 -> (econ201 econ202 span203 span204 span301 span302 geo215 geo243 GEC_2 ISYear1))
 	 (ISYear1 -> (flit113 flit114 flit115 flit116 Arts_Cluster0 span101 span102))))
