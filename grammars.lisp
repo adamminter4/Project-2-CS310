@@ -186,10 +186,7 @@
 
 (defparameter *grammar4*
   '((Start -> (Earth !IsStressed))
-    (!IsStressed -> !Catestrophes)
-    (!IsStressed -> !Collision)
-    (!IsStressed -> !Science)
-    (!IsStressed -> !Attack)
+    (!IsStressed -> !Catestrophes !Collision !Science !Attack)
     
     (!Catestrophes -> (!Catestrophe !PossibleMegaDeath))
     (!Collision -> (isStruckByAGiant !Floater !AndThen))
