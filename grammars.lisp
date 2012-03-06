@@ -185,7 +185,7 @@
 
 
 (defparameter *grammar4*
-  '((Start -> ("The Earth" !IsStressed))
+  '((Start -> (Earth !IsStressed))
     (!IsStressed -> !Catestrophes)
     (!IsStressed -> !Collision)
     (!IsStressed -> !Science)
@@ -193,11 +193,11 @@
     
     (!Catestrophes -> !Catestrophe !PossibleMegaDeath)
     (!Collision -> (isStruckByAGiant !Floater !AndThen))
-    (!Attack -> (isAttackedBy !Sizes !Extraterestrial !Beings !Whichetc)
-    (!Science -> (scientists !DoScience !Sizes !Beings !Whichetc)
+    (!Attack -> (isAttackedBy !Sizes !Extraterestrial !Beings !Whichetc))
+    (!Science -> (scientists !DoScience !Sizes !Beings !Whichetc))
     
     ;Catestrophes;
-    (!Catestrophe -> (burnsUp freezes fallsIntoSun)
+    (!Catestrophe -> (burnsUp freezes fallsIntoSun))
     
     ;Collision;
     (!Floater -> comet asteroid cloud)
@@ -207,7 +207,7 @@
     (!GoOn -> dies !Rescued !Saved)
     
     ;Possible Collision Aftermath;
-    (!Rescued -> (isRescued !Sizes !Extraterestrial !Beings)
+    (!Rescued -> (isRescued !Sizes !Extraterestrial !Beings))
     (!Saved -> butIsSavedBy !SomeOne and the !Science)
     
     (!DoScience -> invent discover)
@@ -249,4 +249,4 @@
     
     (!Ending -> !Tragic !Happy)
     (!Tragic -> andTheyDie andTheyLeave andTheyTurnIntoDisgustingLumps)
-    (!Happy -> andTheyGetMarriedAndLiveHappilyForeverAfter))
+    (!Happy -> andTheyGetMarriedAndLiveHappilyForeverAfter)))

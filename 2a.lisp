@@ -50,18 +50,19 @@
 	    Schedule Schedule Schedule Schedule Schedule)))
 
 
-(deftest !genSchedule1 ()
-   (!generate2-prim 'Schedule *grammar3*))
+;(deftest !genSchedule1 ()
+ ;  (!generate2-prim 'Schedule *grammar3*))
 
 (deftest !raindi ()
   (reset-seed)
-  (test (9 0.2163) (randi 10)))
+  (test 9 (randi 10)))
 
 (deftest !reset-seed ()
   (test 10013 (reset-seed)))
 
 (deftest !shuffle ()
-  (test '(brah bro dude adam) (shuffle '(bro dude adam brah))))
+  (reset-seed)
+  (test '(adam bro dude brah) (shuffle '(bro dude adam brah))))
 
 (deftest !random-elt ()
   (reset-seed)
@@ -69,7 +70,7 @@
 
 (deftest !one-of ()
   (reset-seed)
-  (test (listp (one-of '(bro dude adam brah)))))
+  (test '(brah) (one-of '(bro dude adam brah))))
 
 (deftest !mappend ()
-  (test '(2 3 5 6) (mappend #'cdr '((1 2 3) '(4 5 6)))))
+  (test '(2 3 5 6) (mappend #'cdr '((1 2 3) (4 5 6)))))
